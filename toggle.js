@@ -1,7 +1,5 @@
 module.exports = function (data) {
-  console.log('data', data);
-  // toggleSwitch(data);
-  run_cmd('./codesend 349491 -p 0 -l 189');
+  toggleSwitch(data);
 }
 
 function run_cmd(cmd, callBack) {
@@ -47,5 +45,5 @@ function toggleSwitch(data) {
 
   const codeToToggle = codes[data.outletId][data.outletStatus];
 
-  run_cmd(codeSendPath + ' ' + codeToToggle + ' -p ' + codeSendPIN + ' -l ' + codeSendPulseLength, [], function(text) { console.log(text); });  
+  run_cmd('sudo ' + codeSendPath + ' ' + codeToToggle + ' -p ' + codeSendPIN + ' -l ' + codeSendPulseLength);
 }
