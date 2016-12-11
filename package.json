@@ -1,7 +1,7 @@
 {
   "name": "rfoutlet-node",
   "version": "1.0.0",
-  "description": "[![Project Sponsored By SublimeTextBook.com](https://img.shields.io/badge/👍_Project_Sponsored_By-SublimeTextBook.com Tutorials-brightgreen.svg?style=flat-square)](https://SublimeTextBook.com/friend/TIM) ####433Mhz RF Wireless Power Outlets Have you ever wanted to wirelessly control power outlets from your phone using a Raspberry Pi?",
+  "description": "Control 433Mhz RF Wireless Power Outlets using a Raspberry Pi with Node.js",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
