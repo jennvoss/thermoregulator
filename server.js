@@ -50,7 +50,7 @@ server.register(require('inert'), (err) => {
 });
 
 tempEmitter.startPolling({
-  interval: 45
+  interval: 30
 });
 
 tempEmitter.on('temperature', (temp)=> {

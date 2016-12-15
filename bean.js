@@ -16,9 +16,15 @@ class TempEmitter extends events.EventEmitter {
   constructor() {
     super();
     this._temperature = null;
+    this._device = null;
+    this._pollingOptions = { timeout: 15, interval: 300 };
 
     sdk.on('discover', (scannedDevice)=> {
-      this._connectToDevice(scannedDevice);
+      this._device = scannedDevice;
+      this._connectToDevice(this._device);
+
+      this.stopPolling();
+      this._poller = setInterval(this._connectToDevice.bind(this, this._device), this._pollingOptions.interval*1000);
     });
   }
 
@@ -61,11 +67,8 @@ class TempEmitter extends events.EventEmitter {
   }
 
   startPolling(opts) {
-    let options = Object.assign({ timeout: 15, interval: 300 }, opts);
-
-    sdk.startScanning(options.timeout, true);
-    this.stopPolling();
-    this._poller = setInterval(sdk.startScanning.bind(this, options.timeout, true), options.interval*1000);
+    this._pollingOptions = Object.assign({}, this._pollingOptions, opts);
+    sdk.startScanning(this._pollingOptions.timeout, true);
   }
 
   stopPolling() {
@@ -78,7 +81,6 @@ function getTempEmitter() {
   if (!tempEmitter) {
     tempEmitter = new TempEmitter();
   }
-
   return tempEmitter;
 }
 
