@@ -41,9 +41,20 @@ tempEmitter.on('temperature', (temp)=> {
     temperature: temp,
     timestamp: fb_db.ServerValue.TIMESTAMP
   });
+
+  // toggleLight(temp);
 });
 
 tempEmitter.on('error', (err)=> {
   console.log('error: ', err);
   tempEmitter.quitGracefully();
 });
+
+function toggleLight(temp) {
+  if (temp > highTemp) {
+    // turn the lamp off
+  } else if (temp < lowTemp) {
+    // turn the lamp on
+  }
+}
+
