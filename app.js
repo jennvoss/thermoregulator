@@ -1,8 +1,5 @@
 'use strict';
 
-const Hapi = require('hapi');
-const server = new Hapi.Server();
-
 const toggle = require('./toggle.js');
 const bean = require('./bean.js');
 const tempEmitter = bean.temperature();
@@ -12,52 +9,10 @@ const fb_db = require('firebase/database'); // only needed for ServerValue.TIMES
 const fb_serviceAccount = require('./secret/thermoregulator-67d13-firebase-adminsdk-kwc9p-897e8a0389.json');
 const fb_db_url = "https://thermoregulator-67d13.firebaseio.com";
 
+
 // high and low temp defaults (celcius)
 let lowTemp = 29; // 84.2 F
 let highTemp = 32; // 89.6 F
-
-// web server
-server.connection({ port: 3000 });
-server.register(require('inert'), (err) => {
-  if (err) {
-    throw err;
-  }
-
-  server.route({
-    method: 'GET',
-    path: '/{filename}',
-    handler: {
-      file: function (request) {
-        return request.params.filename;
-      }
-    }
-  });
-
-  server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (request, reply) {
-      reply.file('./index.html');
-    }
-  });
-
-  server.route({
-    method: 'POST',
-    path: '/toggle',
-    handler: function (request, reply) {
-      const body = request.payload;
-      toggle(body);
-    }
-  });
-
-  server.start((err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(`Server running at: ${server.info.uri}`);
-  });
-
-});
 
 
 // firebase
