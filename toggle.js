@@ -3,8 +3,8 @@ module.exports = function (data) {
 }
 
 function run_cmd(cmd, callBack) {
-  var util = require('util')
-  var exec = require('child_process').exec;
+  const util = require('util');
+  const exec = require('child_process').exec;
   function log(error, stdout, stderr) { console.log(error, stdout, stderr); }
   exec(cmd, log);
 }

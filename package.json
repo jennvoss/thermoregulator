@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jennvoss/rfoutlet#readme",
   "dependencies": {
+    "bean-sdk": "^0.6.1",
     "hapi": "^16.0.1",
     "inert": "^4.0.3"
   }
