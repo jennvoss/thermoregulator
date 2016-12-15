@@ -1,21 +1,21 @@
 {
-  "name": "rfoutlet-node",
+  "name": "thermoregulator",
   "version": "1.0.0",
-  "description": "Control 433Mhz RF Wireless Power Outlets using a Raspberry Pi with Node.js",
+  "description": "Keep it hot for your cold blooded friends.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jennvoss/rfoutlet.git"
+    "url": "git+https://github.com/jennvoss/thermoregulator.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jennvoss/rfoutlet/issues"
+    "url": "https://github.com/jennvoss/thermoregulator/issues"
   },
-  "homepage": "https://github.com/jennvoss/rfoutlet#readme",
+  "homepage": "https://github.com/jennvoss/thermoregulator#readme",
   "dependencies": {
     "bean-sdk": "^0.6.1",
     "hapi": "^16.0.1",
