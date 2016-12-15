@@ -3,6 +3,8 @@
 const Hapi = require('hapi');
 const server = new Hapi.Server();
 const toggle = require('./toggle.js');
+const bean = require('./bean.js');
+const tempEmitter = bean.temperature();
 
 server.connection({ port: 3000 });
 
@@ -45,4 +47,14 @@ server.register(require('inert'), (err) => {
     console.log(`Server running at: ${server.info.uri}`);
   });
 
+});
+
+tempEmitter.startPolling();
+tempEmitter.on('temperature', (temp)=> {
+  console.log('here is the temp: ', temp);
+});
+
+tempEmitter.on('error', (err)=> {
+  console.log('error: ', err);
+  tempEmitter.quitGracefully();
 });
