@@ -9,10 +9,8 @@ void loop() {
   if (connected) {
     int8_t temp = Bean.getTemperature();
     Serial.println(temp);
-    Bean.setLed(0, 255, 0);
     Bean.sleep(1000);
   } else {
-    Bean.setLed(0, 0, 0);
     Bean.sleep(0xFFFFFFFF);
   }
 }
