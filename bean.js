@@ -29,10 +29,9 @@ class TempEmitter extends events.EventEmitter {
   }
 
   _connectToDevice(scannedDevice) {
-    let _ctx = this;
     sdk.connectScannedDevice(scannedDevice, (err, bean)=> {
       if (err) {
-        _ctx.emit('error', `Bean connection failed: ${err}`);
+        this.emit('error', `Bean connection failed: ${err}`);
       } else {
         bean.lookupServices((err)=> {
           // The bean is now ready to be used, you can either call the methods available
@@ -40,27 +39,32 @@ class TempEmitter extends events.EventEmitter {
           // provide their own API, for example: bean.getDeviceInformationService().
 
           if (err) {
-            _ctx.emit('error', `Service lookup FAILED: ${err}`);
+            this.emit('error', `Service lookup FAILED: ${err}`);
           } else {
-            const serialTransportService = bean.getSerialTransportService();
-            
-            // disconnect after 5 seconds
-            _ctx.disconnectTimeout = setTimeout(_ctx.quitGracefully, 5000);
-
-            serialTransportService.registerForCommandNotification(serialTransport.commandIds.SERIAL_DATA, (serialCmd)=> {
-              _ctx._temperature = `${serialCmd.data}`;
-
-              if (!!Number(_ctx._temperature)) {
-                _ctx.emit('temperature', _ctx._temperature);
-                _ctx.quitGracefully();
-                clearTimeout(_ctx.disconnectTimeout);
-              }            
-            });
+            this._getTransportService(bean);
           }
         });
       }
     });
-  } 
+  }
+
+  _getTransportService(bean) {
+    const serialTransportService = bean.getSerialTransportService();
+    
+    // disconnect after 5 seconds
+    this.disconnectTimeout = setTimeout(this.quitGracefully, 5000);
+    serialTransportService.registerForCommandNotification(serialTransport.commandIds.SERIAL_DATA, this._readSerialData.bind(this));
+  }
+
+  _readSerialData(serialCmd) {
+    this._temperature = `${serialCmd.data}`;
+
+    if (!!Number(this._temperature)) {
+      this.emit('temperature', this._temperature);
+      this.quitGracefully();
+      clearTimeout(this.disconnectTimeout);
+    }
+  }
   
   quitGracefully() {
     sdk.quitGracefully(Function.prototype);
