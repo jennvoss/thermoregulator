@@ -49,7 +49,10 @@ server.register(require('inert'), (err) => {
 
 });
 
-tempEmitter.startPolling();
+tempEmitter.startPolling({
+  interval: 45
+});
+
 tempEmitter.on('temperature', (temp)=> {
   console.log('here is the temp: ', temp);
 });

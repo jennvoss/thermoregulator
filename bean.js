@@ -60,14 +60,12 @@ class TempEmitter extends events.EventEmitter {
     sdk.quitGracefully(Function.prototype);
   }
 
-  startPolling() {
-    // scan for devices, timeout after 15 seconds
-    // filter for only bean devices
-    sdk.startScanning(15, true);
-    
-    // scan again in 5 min
+  startPolling(opts) {
+    let options = Object.assign({ timeout: 15, interval: 300 }, opts);
+
+    sdk.startScanning(options.timeout, true);
     this.stopPolling();
-    this._poller = setInterval(sdk.startScanning.bind(this, 15, true), 6e5);
+    this._poller = setInterval(sdk.startScanning.bind(this, options.timeout, true), options.interval*1000);
   }
 
   stopPolling() {
