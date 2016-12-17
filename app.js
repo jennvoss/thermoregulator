@@ -34,7 +34,7 @@ threshold.on('value', function(snapshot) {
 
 
 // temp reader
-tempEmitter.startPolling({ interval: 30 });
+tempEmitter.startPolling({ interval: 300 });
 tempEmitter.on('temperature', (temp)=> {
   let newTempRef = tempList.push();
   newTempRef.set({
