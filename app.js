@@ -24,7 +24,7 @@ fb_admin.initializeApp({
 
 const db = fb_admin.database();
 const threshold = db.ref('/threshold');
-const tempList = db.ref('/temps');
+const tempList = db.ref('/tempReadings');
 
 threshold.on('value', function(snapshot) {
   lowTemp = snapshot.low;
