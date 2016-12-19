@@ -43,6 +43,7 @@ tempEmitter.on('temperature', (temp)=> {
       temperature: temp,
       timestamp: fb_db.ServerValue.TIMESTAMP
     });
+    lastTemp = temp;
   }
 
   // toggleLight(temp);
