@@ -13,6 +13,7 @@ const fb_db_url = "https://thermoregulator-67d13.firebaseio.com";
 // high and low temp defaults (celcius)
 let lowTemp = 29; // 84.2 F
 let highTemp = 32; // 89.6 F
+let lastTemp = null;
 
 
 // firebase
@@ -36,11 +37,13 @@ threshold.on('value', function(snapshot) {
 // temp reader
 tempEmitter.startPolling({ interval: 300 });
 tempEmitter.on('temperature', (temp)=> {
-  let newTempRef = tempList.push();
-  newTempRef.set({
-    temperature: temp,
-    timestamp: fb_db.ServerValue.TIMESTAMP
-  });
+  if (temp !== lastTemp) {
+    let newTempRef = tempList.push();
+    newTempRef.set({
+      temperature: temp,
+      timestamp: fb_db.ServerValue.TIMESTAMP
+    });
+  }
 
   // toggleLight(temp);
 });
