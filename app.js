@@ -38,17 +38,16 @@ threshold.on('value', function(snapshot) {
 // temp reader
 tempEmitter.startPolling({ interval: 300 });
 tempEmitter.on('temperature', (temp)=> {
-  lastReading.set({
+  let t = {
     temperature: temp,
     timestamp: fb_db.ServerValue.TIMESTAMP
-  });
-  
+  };
+
+  lastReading.set(t);
+
   if (temp !== lastTemp) {
     let newTempRef = tempList.push();
-    newTempRef.set({
-      temperature: temp,
-      timestamp: fb_db.ServerValue.TIMESTAMP
-    });
+    newTempRef.set(t);
     lastTemp = temp;
   }
 
