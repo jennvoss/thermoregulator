@@ -25,6 +25,7 @@ fb_admin.initializeApp({
 const db = fb_admin.database();
 const threshold = db.ref('/threshold');
 const tempList = db.ref('/tempReadings');
+const lastReading = db.ref('/lastReading');
 
 threshold.on('value', function(snapshot) {
   lowTemp = snapshot.low;
@@ -37,6 +38,11 @@ threshold.on('value', function(snapshot) {
 // temp reader
 tempEmitter.startPolling({ interval: 300 });
 tempEmitter.on('temperature', (temp)=> {
+  lastReading.set({
+    temperature: temp,
+    timestamp: fb_db.ServerValue.TIMESTAMP
+  });
+  
   if (temp !== lastTemp) {
     let newTempRef = tempList.push();
     newTempRef.set({
