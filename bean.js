@@ -51,7 +51,7 @@ class TempEmitter extends events.EventEmitter {
   _getTransportService(bean) {
     const serialTransportService = bean.getSerialTransportService();
     serialTransportService.registerForCommandNotification(serialTransport.commandIds.SERIAL_DATA, this._readSerialData.bind(this));
-    
+
     // disconnect after 5 seconds, in case the serial data is borked
     this.disconnectTimeout = setTimeout(this.quitGracefully, 5000);
   }
@@ -65,7 +65,7 @@ class TempEmitter extends events.EventEmitter {
       clearTimeout(this.disconnectTimeout);
     }
   }
-  
+
   quitGracefully() {
     sdk.quitGracefully(Function.prototype);
   }
