@@ -33,7 +33,11 @@ function toggleSwitch(data) {
 
   const codeToToggle = codes[data.outletId][data.outletStatus];
 
-  run_cmd('sudo ' + codeSendPath + ' ' + codeToToggle + ' -p ' + codeSendPIN + ' -l ' + codeSendPulseLength);
+  let cmd = 'sudo ' + codeSendPath + ' ' + codeToToggle + ' -p ' + codeSendPIN + ' -l ' + codeSendPulseLength;
+
+  console.log('toggle: ', cmd);
+
+  run_cmd(cmd);
 }
 
 module.exports = function(data) {

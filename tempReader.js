@@ -50,8 +50,8 @@ class TempReader {
 
     const threshold = db.ref('/threshold');
     threshold.on('value', function(snapshot) {
-      this.lowTemp = snapshot.low;
-      this.highTemp = snapshot.high;
+      this.lowTemp = Number(snapshot.val().low);
+      this.highTemp = Number(snapshot.val().high);
     }.bind(this), function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
