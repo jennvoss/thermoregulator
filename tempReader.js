@@ -25,7 +25,7 @@ class TempReader {
   init() {
     this.initFireBase();
 
-    tempEmitter.startPolling({ interval: 300 });
+    tempEmitter.startPolling({ interval: 300, timeout: 30 });
 
     tempEmitter.on('temperature', (temp)=> {
       this.logTemp(temp);
