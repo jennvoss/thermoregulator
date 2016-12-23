@@ -34,9 +34,6 @@ function toggleSwitch(data) {
   const codeToToggle = codes[data.outletId][data.outletStatus];
 
   let cmd = 'sudo ' + codeSendPath + ' ' + codeToToggle + ' -p ' + codeSendPIN + ' -l ' + codeSendPulseLength;
-
-  console.log('toggle: ', cmd);
-
   run_cmd(cmd);
 }
 
