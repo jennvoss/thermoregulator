@@ -48,14 +48,18 @@ class TempReader {
     this.db_refs.lastReading = db.ref('/lastReading');
     this.db_refs.lightOn = db.ref('/lightOn');
 
+    this.db_refs.lightOn.once('value', data => {
+      this.lightOn = data.val();
+    });
+
     const threshold = db.ref('/threshold');
-    threshold.on('value', function(snapshot) {
-      this.lowTemp = Number(snapshot.val().low);
-      this.highTemp = Number(snapshot.val().high);
+    threshold.on('value', data => {
+      this.lowTemp = Number(data.val().low);
+      this.highTemp = Number(data.val().high);
       if (this.lastTemp) {
         this.toggleLight();
       }
-    }.bind(this), function (errorObject) {
+    }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
   }
