@@ -52,6 +52,9 @@ class TempReader {
     threshold.on('value', function(snapshot) {
       this.lowTemp = Number(snapshot.val().low);
       this.highTemp = Number(snapshot.val().high);
+      if (this.lastTemp) {
+        this.toggleLight();
+      }
     }.bind(this), function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
     });
