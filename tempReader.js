@@ -56,7 +56,6 @@ class TempReader {
     threshold.on('value', data => {
       this.lowTemp = Number(data.val().low);
       this.highTemp = Number(data.val().high);
-      console.log('low - high' + this.lowTemp + ' - ' + this.highTemp);
       if (!!this.lastTemp) {
         this.toggleLight();
       }
