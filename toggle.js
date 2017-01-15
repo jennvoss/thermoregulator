@@ -6,7 +6,7 @@ function run_cmd(cmd, callBack) {
 }
 
 function toggleSwitch(data) {
-  const codeSendPath = './codesend';
+  const codeSendPath = '/home/pi/thermoregulator/codesend';
 
   // This PIN is not the first PIN on the Raspberry Pi GPIO header!
   // Consult https://projects.drogon.net/raspberry-pi/wiringpi/pins/
