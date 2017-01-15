@@ -64,8 +64,9 @@ class TempReader {
     });
   }
 
-  logTemp(temp) {
+  logTemp(temp, batteryLevel) {
     let t = {
+      batteryLevel: batteryLevel,
       temperature: temp,
       timestamp: this.getServerTimestamp()
     };
