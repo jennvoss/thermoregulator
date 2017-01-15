@@ -17,14 +17,17 @@ class TempEmitter extends events.EventEmitter {
     super();
     this._temperature = null;
     this._device = null;
-    this._pollingOptions = { timeout: 15, interval: 300 };
+    this._pollingOptions = {
+      interval: 15, // min
+      timeout: 30   // sec
+    };
 
     sdk.on('discover', (scannedDevice)=> {
       this._device = scannedDevice;
       this._connectToDevice(this._device);
 
       this.stopPolling();
-      this._poller = setInterval(this._connectToDevice.bind(this, this._device), this._pollingOptions.interval*1000);
+      this._poller = setInterval(this._connectToDevice.bind(this, this._device), this._pollingOptions.interval*60*1000);
     });
   }
 
