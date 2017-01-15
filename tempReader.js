@@ -25,8 +25,6 @@ class TempReader {
   init() {
     this.initFireBase();
 
-    tempEmitter.startPolling({ interval: 9e5, timeout: 30 });
-
     tempEmitter.on('temperature', (temp)=> {
       this.logTemp(temp);
     });
@@ -61,6 +59,14 @@ class TempReader {
       }
     }, function (errorObject) {
       console.log('The read failed: ' + errorObject.code);
+    });
+
+    const pollingInterval = db.ref('/poller');
+    pollingInterval.on('value', data => {
+      tempEmitter.stopPolling();
+      tempEmitter.startPolling({ interval: Number(data.val().interval), timeout: Number(data.val().timeout) });
+    }, function (errorObject) {
+      console.log('pollingInterval read failed: ' + errorObject.code);
     });
   }
 
