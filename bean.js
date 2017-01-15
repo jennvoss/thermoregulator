@@ -17,7 +17,6 @@ class TempEmitter extends events.EventEmitter {
     super();
     this._temperature = null;
     this._device = null;
-    this._batteryLevel = null;
     this._pollingOptions = { timeout: 15, interval: 300 };
 
     sdk.on('discover', (scannedDevice)=> {
@@ -43,7 +42,6 @@ class TempEmitter extends events.EventEmitter {
             this.emit('error', `Service lookup FAILED: ${err}`);
           } else {
             this._getTransportService(bean);
-            this._batteryLevel = bean.getBatteryLevel();
           }
         });
       }
@@ -62,7 +60,7 @@ class TempEmitter extends events.EventEmitter {
     this._temperature = `${serialCmd.data}`;
 
     if (!!Number(this._temperature)) {
-      this.emit('temperature', this._temperature, this._batteryLevel);
+      this.emit('temperature', this._temperature);
       this.quitGracefully();
       clearTimeout(this.disconnectTimeout);
     }
